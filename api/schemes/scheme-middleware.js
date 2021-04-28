@@ -62,8 +62,9 @@ const checkSchemeId = async (req, res, next) => {
   }
 */
 const validateScheme = (req, res, next) => {
-  if (!req.body.scheme_name || req.body.scheme_name.length < 1 || typeof (req.body.scheme_name) !== 'string') {
-    res.status(400).json({
+  const schemeName = req.body.scheme_name;
+  if (!schemeName || schemeName.length < 1 || typeof (schemeName) !== 'string') {
+    return res.status(400).json({
       message: "invalid scheme_name"
     })
   } else {
@@ -81,6 +82,15 @@ const validateScheme = (req, res, next) => {
   }
 */
 const validateStep = (req, res, next) => {
+  const instructions = req.body.instructions
+  const stepNumber = req.body.step_number
+  if (!instructions || instructions.length < 1 || typeof (instructions) !== 'string' || stepNumber < 1 || typeof (stepNumber) !== 'number') {
+    return res.status(400).json({
+      message: "invalid step",
+    })
+  } else {
+    next()
+  }
 
 }
 
