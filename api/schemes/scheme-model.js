@@ -22,7 +22,7 @@ function find() { // EXERCISE A
     .groupBy("sc.scheme_id")
     .orderBy("sc.scheme_id", "asc")
     .select('sc.*')
-    .count('st.step_id as number_of_steps')
+    .count('st.step_id as number_of_steps');
 
 }
 
@@ -62,6 +62,7 @@ function findById(scheme_id) { // EXERCISE B
         },
         // etc
       ]
+      
 
     4B- Using the array obtained and vanilla JavaScript, create an object with
     the structure below, for the case _when steps exist_ for a given `scheme_id`:
@@ -92,6 +93,11 @@ function findById(scheme_id) { // EXERCISE B
         "steps": []
       }
   */
+  return db("schemes as sc")
+    .leftJoin("steps as st", "st.scheme_id", "sc.scheme_id")
+    .orderBy('st.step_number', 'asc')
+    .where('sc.scheme_id', scheme_id)
+    .select('sc.*', 'st.*')
 }
 
 function findSteps(scheme_id) { // EXERCISE C
