@@ -121,6 +121,12 @@ function findSteps(scheme_id) { // EXERCISE C
         }
       ]
   */
+  //Left Join is used because there will be schemes for which the steps do not exist
+  return db('schemes as sc')
+    .leftJoin("steps as st", "sc.scheme_id", "st.scheme_id")
+    .where("st.scheme_id", scheme_id)
+    .orderBy('st.step_number', 'asc')
+    .select("st.step_id", "st.step_number", "st.instructions", "sc.scheme_name")
 }
 
 function add(scheme) { // EXERCISE D
